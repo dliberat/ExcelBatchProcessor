@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{003B26AD-DA7E-413C-AB42-9BAB96E9D313}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>excelscanner</RootNamespace>
-    <AssemblyName>excelscanner</AssemblyName>
+    <ProjectGuid>{67883BD5-9DC6-445C-B2C6-776588BFD023}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PluginContracts</RootNamespace>
+    <AssemblyName>PluginContracts</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -49,26 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Merger.cs" />
-    <Compile Include="FileFinder.cs" />
-    <Compile Include="FileProcessor.cs" />
-    <Compile Include="PluginLoader.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IExcelProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ESPlugins\ESPlugins.csproj">
-      <Project>{ee1d73a0-3f60-465e-8a73-1ad138a4472f}</Project>
-      <Name>ESPlugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PluginContracts\PluginContracts.csproj">
-      <Project>{67883BD5-9DC6-445C-B2C6-776588BFD023}</Project>
-      <Name>PluginContracts</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
