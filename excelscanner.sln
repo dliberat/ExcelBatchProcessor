@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "excelscanner", "excelscanner\excelscanner.csproj", "{003B26AD-DA7E-413C-AB42-9BAB96E9D313}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelBatchProcessor", "excelscanner\ExcelBatchProcessor.csproj", "{003B26AD-DA7E-413C-AB42-9BAB96E9D313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESPlugins", "ESPlugins\ESPlugins.csproj", "{EE1D73A0-3F60-465E-8A73-1AD138A4472F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBPPluginContracts", "PluginContracts\EBPPluginContracts.csproj", "{67883BD5-9DC6-445C-B2C6-776588BFD023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginContracts", "PluginContracts\PluginContracts.csproj", "{67883BD5-9DC6-445C-B2C6-776588BFD023}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelBatchProcessor.Tests", "ExcelscannerTests\ExcelBatchProcessor.Tests.csproj", "{38BFFF55-3632-444C-8EB9-CDF3A6CE0008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBPDocs", "EBPDocs\EBPDocs.csproj", "{01A7C108-000A-4610-927A-1055A0097FB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{003B26AD-DA7E-413C-AB42-9BAB96E9D313}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{003B26AD-DA7E-413C-AB42-9BAB96E9D313}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{003B26AD-DA7E-413C-AB42-9BAB96E9D313}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE1D73A0-3F60-465E-8A73-1AD138A4472F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE1D73A0-3F60-465E-8A73-1AD138A4472F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE1D73A0-3F60-465E-8A73-1AD138A4472F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE1D73A0-3F60-465E-8A73-1AD138A4472F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67883BD5-9DC6-445C-B2C6-776588BFD023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67883BD5-9DC6-445C-B2C6-776588BFD023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67883BD5-9DC6-445C-B2C6-776588BFD023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67883BD5-9DC6-445C-B2C6-776588BFD023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38BFFF55-3632-444C-8EB9-CDF3A6CE0008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38BFFF55-3632-444C-8EB9-CDF3A6CE0008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38BFFF55-3632-444C-8EB9-CDF3A6CE0008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38BFFF55-3632-444C-8EB9-CDF3A6CE0008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A7C108-000A-4610-927A-1055A0097FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A7C108-000A-4610-927A-1055A0097FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A7C108-000A-4610-927A-1055A0097FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A7C108-000A-4610-927A-1055A0097FB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

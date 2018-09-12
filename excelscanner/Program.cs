@@ -1,118 +1,52 @@
-﻿using PluginContracts;
+﻿using EBPPluginContracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CommandLine;
+using NLog;
+using System.Diagnostics.CodeAnalysis;
 
-namespace excelscanner
+namespace ExcelBatchProcessor
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
-        static string workingDir = @"C:\Users\owner\Desktop\e"; //Environment.CurrentDirectory
-        static string outputDir = @"C:\Users\owner\Desktop\e_output";
+        static Logger logger = LogManager.GetCurrentClassLogger();
 
-        static void Main(string[] args)
+        /// <summary>
+        /// Entry point for the application.  
+        /// </summary>
+        /// <param name="args">Command-line arguments. Recognized parameters include <c>--debug</c>,
+        /// <c>--input</c>, and <c>--output</c>.</param>
+        public static void Main(string[] args)
         {
-            string[] path = new string[1] { GetDirPath() };
-            FileFinder ff = new FileFinder(path);
-            List<FileInfo> files = ff.LoadFiles();
+            ParserResult<CLIArguments> pargs = Parser.Default.ParseArguments<CLIArguments>(args);
 
-            Console.WriteLine($"Loaded {files.Count} files. Press ENTER to process, or type MERGE to merge.");
-            string ret = Console.ReadLine();
+            pargs.WithNotParsed<CLIArguments>(a => Environment.Exit(0));
 
-            while (true)
-            {
-                if (ret.ToLower() == "merge")
-                {
-                    Merge(files);
-                    break;
-                } else if (ret == "") {
-                    Process(files);
-                    break;
-                } else
-                {
-                    Console.WriteLine("Invalid input.");
-                    ret = Console.ReadLine();
-                }
-            }
-
-            Console.ReadLine();
+            pargs.WithParsed<CLIArguments>(a => BootstrapApp(a));
         }
-
-        static void Merge(List<FileInfo> files)
+        private static void BootstrapApp(CLIArguments pargs)
         {
-            Merger am = new Merger(files, outputDir);
-            am.Merge();
+            // log config
+            Logging.ConfigGenerator logConfig = new Logging.ConfigGenerator(pargs.Debug, pargs.File);
+            LogManager.Configuration = logConfig.GetConfig();
+            logger.Debug("Initialized logging config with debug: {d} and file: {f}", pargs.Debug, pargs.File);
 
-            Console.WriteLine("Merger complete.");
-        }
-
-        static void Process(List<FileInfo> files)
-        {
-            ICollection<IExcelProcess> plugins = LoadPlugins();
-
-            FileProcessor fp = new FileProcessor(files, outputDir);
-            fp.AddPlugins(plugins);
-
-            Console.WriteLine("File Processor ready. Press ENTER to begin processing.");
-            Console.ReadLine();
-
-            fp.Process();
-
-            Console.WriteLine("Processing finished.");
-        }
-
-        static string GetDirPath()
-        {
-            string curpath = workingDir;
-            Console.WriteLine($"Currently working in: {curpath}\nENTER to use current path, or type in a path.");
-
-            while (true)
-            {
-                string retval = Console.ReadLine();
-                if (retval == "")
-                {
-                    return curpath;
-                }
-                else if (Directory.Exists(retval))
-                {
-                    return retval;
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid directory");
-                }
-            }
-        }
-
-        private static ICollection<IExcelProcess> LoadPlugins()
-        {
+            // plugins
             string cwd = Directory.GetCurrentDirectory();
             string pluginDir = Path.Combine(cwd, "plugins");
-            PluginLoader loader = new PluginLoader();
-            ICollection<IExcelProcess> plugins = loader.Load(pluginDir);
+            Plugins.DLLLoader loader = new Plugins.DLLLoader();
+            // Inject the loader, then use the manager to add in additional/default
+            // plugins as necessary
+            Plugins.PluginManager manager = new Plugins.PluginManager(loader);
+            ICollection<IExcelProcess> plugins = manager.LoadFromDirectory(pluginDir);
 
-            // Drawing removal not working reliably. May be related to
-            // drawings with identical names or corrupted references
-            // plugins.Add(new ESPlugins.RemoveImages());
-
-            // Remove all hidden rows, empty rows, empty columns, and hidden sheets
-            plugins.Add(new ESPlugins.RemoveEmptyHidden());
-
-            // Remove rows that don't include BOTH KR and JP text
-            // Removes rows with only numerical data too, since presumably these don't
-            // really need to be put into TM
-            plugins.Add(new ESPlugins.RemoveNoKRJPRows());
-
-            //plugins.Add(new ESPlugins.RemoveENTWTHColumns());
-            plugins.Add(new ESPlugins.RemoveNonKRJPCols());
-
-            plugins.Add(new ESPlugins.Flatten());
-
-            plugins.Add(new ESPlugins.RemoveEmptySheets());
-            return plugins;
+            // main app
+            Files.FileFinder ff = new Files.FileFinder(new string[] { pargs.Input });
+            App.IFileProcessor fp = new App.BasicFileProcessor();
+            App.App mainApp = new App.ProcessorApp(pargs.Input, pargs.Output, plugins, ff, fp);
+            mainApp.Run();
         }
     }
 }

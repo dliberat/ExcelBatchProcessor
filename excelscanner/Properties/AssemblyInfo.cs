@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("excelscanner")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ExcelBatchProcessor")]
+[assembly: AssemblyDescription("Multithreaded processing for Excel files with EPPlus")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("excelscanner")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyProduct("ExcelBatchProcessor")]
+[assembly: AssemblyCopyright("Copyright © Dan Liberatori 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

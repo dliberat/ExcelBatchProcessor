@@ -1,10 +1,9 @@
 ﻿using OfficeOpenXml;
 
-namespace PluginContracts
+namespace EBPPluginContracts
 {
     public interface IExcelProcess
     {
-        void Run(ExcelWorkbook Workbook);
-        void Run(ExcelWorkbook Workbook, object parameters);
+        void Run(string Path, ExcelWorkbook Workbook);
     }
 }
